@@ -1,8 +1,12 @@
-from flask.ext.wtf import Form, TextField, TextAreaField, SubmitField, validators, ValidationError
+#Need to do the following installs:
+# pip install flask-wtf
+# pip install email_validator
+from flask_wtf import Form
+from wtforms import StringField, TextAreaField, SubmitField, validators, ValidationError
 
 class ContactForm(Form):
-  name = TextField("Name",  [validators.Required()])
-  email = TextField("Email",  [validators.Required(), validators.Email()])
-  subject = TextField("Subject",  [validators.Required()])
-  message = TextAreaField("Message",  [validators.Required()])
-  submit = SubmitField("Send")
+    name = StringField("Name",  [validators.InputRequired()])
+    email = StringField("Email",  [validators.InputRequired(), validators.Email()])
+    subject = StringField("Subject",  [validators.InputRequired()])
+    message = TextAreaField("Message",  [validators.InputRequired()])
+    submit = SubmitField("Send")
