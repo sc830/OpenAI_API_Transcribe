@@ -15,7 +15,9 @@ def about():
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
-  form = ContactForm()
+  # Flask 2.2.2 requires a parameter to a form object: request.form or other
+  # See https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
+  form = ContactForm(request.form)
   
   if request.method == 'POST':
     if form.validate() == False:
