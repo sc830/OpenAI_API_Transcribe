@@ -1,8 +1,10 @@
-from flask.ext.wtf import Form, TextField, TextAreaField, SubmitField
+#These two imports were updated from original which were deprecated by Flask
+from flask_wtf import Form
+from wtforms import StringField, TextAreaField, SubmitField
 
 class ContactForm(Form):
-  name = TextField("Name")
-  email = TextField("Email")
-  subject = TextField("Subject")
-  message = TextAreaField("Message")
-  submit = SubmitField("Send")
+    name = StringField("Name")
+    email = StringField("Email")
+    subject = StringField("Subject")
+    message = TextAreaField("Message")
+    submit = SubmitField("Send")
