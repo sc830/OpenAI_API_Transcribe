@@ -2,8 +2,8 @@ from flask import Flask, render_template, request, flash
 from forms import ContactForm
 
 app = Flask(__name__)
-
-app.secret_key = 'development key'
+app.config['SECRET_KEY']='LongAndRandomSecretKey'
+# app.secret_key = 'development key'
 
 @app.route('/')
 def home():

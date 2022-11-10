@@ -1,7 +1,7 @@
 #Need to do the following installs:
 # pip install flask-wtf
 # pip install email_validator
-from flask_wtf import Form
+from flask_wtf import Form, FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, validators, ValidationError
 
 class ContactForm(Form):
