@@ -21,6 +21,8 @@ def contact():
   
   if request.method == 'POST':
     if form.validate() == False:
+      # This will print out any errors the form has to the user.  Used for debugging.
+      flash(form.errors)
       flash('All fields are required.')
       return render_template('contact.html', form=form)
     else:
