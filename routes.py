@@ -1,21 +1,22 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, flash, render_template, request
+#Need to do the following install for mail to work:
+#pip install Flask-Mail
+from flask_mail import Mail, Message
+#forms is our local forms.py
 from forms import ContactForm
-from flask.ext.mail import Message, Mail
-
-mail = Mail()
 
 app = Flask(__name__)
+mail = Mail(app)
 
 app.config['SECRET_KEY']='LongAndRandomSecretKey'
-# app.secret_key = 'development key'
-
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_PORT"] = 465
-app.config["MAIL_USE_SSL"] = True
-app.config["MAIL_USERNAME"] = 'contact@example.com'
-app.config["MAIL_PASSWORD"] = 'your-password'
-
-mail.init_app(app)
+# Commenting out the following to accept the defaults, see docs at:
+# https://pythonhosted.org/Flask-Mail/
+#app.config["MAIL_SERVER"] = "smtp.gmail.com"
+#app.config["MAIL_PORT"] = 465
+#app.config["MAIL_USE_SSL"] = True
+#app.config["MAIL_USERNAME"] = 'contact@example.com'
+#app.config["MAIL_PASSWORD"] = 'your-password'
+#mail.init_app(app)
 
 @app.route('/')
 def home():
@@ -29,8 +30,7 @@ def about():
 def contact():
     # Flask 2.2.2 requires a parameter to a form object: request.form or other
 	  # See https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
-	  form = ContactForm(request.form)
-
+    form = ContactForm(request.form)
     if request.method == 'POST':
       if form.validate() == False:
         # This will print out any errors the form has to the user.  Used for debugging.
@@ -38,11 +38,11 @@ def contact():
         flash('All fields are required.')
         return render_template('contact.html', form=form)
       else:
-        msg = Message(form.subject.data, sender='contact@example.com', recipients=['your_email@example.com'])
+        msg = Message(form.subject.data, sender='t_l81@txstate.edu', recipients=[form.email.data])
         msg.body = """
         From: %s <%s>
-        %s
-        """ % (form.name.data, form.email.data, form.message.data)
+        %s %s
+        """ % (form.name.data, form.email.data, form.subject.data, form.message.data)
         mail.send(msg)
         return 'Form posted.'
     elif request.method == 'GET':
