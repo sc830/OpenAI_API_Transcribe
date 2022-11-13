@@ -24,7 +24,10 @@
     {% endfor %}
     
     <form action="{{ url_for('contact') }}" method=post>
-      {{ form.hidden_tag() }}
+    <!-- 
+      This form has no CSRF protection.  To add, see:
+      https://flask-wtf.readthedocs.io/en/0.15.x/csrf/
+    --> 
       
       {{ form.name.label }}
       {{ form.name }}
