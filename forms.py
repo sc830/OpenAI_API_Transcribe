@@ -10,3 +10,4 @@ class ContactForm(Form):
     subject = StringField("Subject",  [validators.InputRequired()])
     message = TextAreaField("Message",  [validators.InputRequired()])
     submit = SubmitField("Send")
+
