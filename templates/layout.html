@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+<!-- The layout.html file is a template the is 'extended' by the other html files.  EG:  They all will have block content-->
 <html>
   <head>
     <title>Flask App</title>
+    <!-- url_for is a flask function for dynamic urls.  These examples show it simplist use-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   </head>
   <body>
