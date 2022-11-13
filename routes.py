@@ -1,9 +1,15 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, flash, render_template, request
+#Need to do the following install for mail to work:
+#pip install Flask-Mail
+from flask_mail import Mail, Message
+#forms is our local forms.py
 from forms import ContactForm
 from flask_mail import Mail, Message
 import os
 
 app = Flask(__name__)
+app.config['SECRET_KEY']='LongAndRandomSecretKey'
+# app.secret_key = 'development key'
 
 app.secret_key = 'development key'
 app.config['SECRET_KEY']='LongAndRandomSecretKey'
@@ -26,11 +32,11 @@ mail = Mail(app)
 
 @app.route('/')
 def home():
-  return render_template('home.html')
+    return render_template('home.html')
 
 @app.route('/about')
 def about():
-  return render_template('about.html')
+    return render_template('about.html')
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
@@ -57,4 +63,4 @@ def contact():
       return render_template('contact.html', form=form)
   
 if __name__ == '__main__':
-  app.run(debug=True)
+    app.run(debug=True)
