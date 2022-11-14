@@ -1,22 +1,25 @@
-from flask.ext.wtf import Form, TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
+#Need to do the following installs:
+# pip install flask-wtf
+# pip install email_validator
+from flask_wtf import Form, FlaskForm
+from wtforms import StringField, TextAreaField, SubmitField, validators, ValidationError
 from models import db, User
 
 class ContactForm(Form):
-  name = TextField("Name",  [validators.Required("Please enter your name.")])
-  email = TextField("Email",  [validators.Required("Please enter your email address."), validators.Email("Please enter your email address.")])
-  subject = TextField("Subject",  [validators.Required("Please enter a subject.")])
-  message = TextAreaField("Message",  [validators.Required("Please enter a message.")])
-  submit = SubmitField("Send")
-
+    name = StringField("Name",  [validators.InputRequired("Please enter your name.")])
+    email = StringField("Email",  [validators.InputRequired("Please enter your email address."), validators.Email("Please enter your email address.")])
+    subject = StringField("Subject",  [validators.InputRequired("Please enter a subject.")])
+    message = TextAreaField("Message",  [validators.InputRequired("Please enter a message.")])
+    submit = SubmitField("Send") 
 class SignupForm(Form):
   firstname = TextField("First name",  [validators.Required("Please enter your first name.")])
   lastname = TextField("Last name",  [validators.Required("Please enter your last name.")])
   email = TextField("Email",  [validators.Required("Please enter your email address."), validators.Email("Please enter your email address.")])
   password = PasswordField('Password', [validators.Required("Please enter a password.")])
   submit = SubmitField("Create account")
-
   def __init__(self, *args, **kwargs):
     Form.__init__(self, *args, **kwargs)
+
 
   def validate(self):
     if not Form.validate(self):
