@@ -1,9 +1,10 @@
-from intro_to_flask import app
-from flask import render_template, request, Flask
-from .forms import ContactForm
-from flask_mail import Message, Mail
 import os
-
+from intro_to_flask import app
+import sys 
+sys.dont_write_bytecode = True
+from flask import render_template, request, Flask
+from flask_mail import Message, Mail
+from .forms import ContactForm
 
 #The mail_user_name and mail_app_password values are in the .env file
 #Google requires an App Password as of May, 2022: 
