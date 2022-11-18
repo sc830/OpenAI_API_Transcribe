@@ -1,4 +1,7 @@
-#Need to do the following installs:
+
+#!/usr/bin/env python -B
+import sys 
+sys.dont_write_bytecode = True#Need to do the following installs:
 # pip install flask-wtf
 # pip install email_validator
 from flask_wtf import Form, FlaskForm
