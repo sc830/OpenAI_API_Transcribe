@@ -1,3 +1,6 @@
+#!/usr/bin/env python -B
+import sys 
+sys.dont_write_bytecode = True
 from flask import Flask, flash, render_template, request
 #Need to do the following install for mail to work:
 #pip install Flask-Mail
