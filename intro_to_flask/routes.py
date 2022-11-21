@@ -12,7 +12,6 @@ from .forms import ContactForm
 
 mail_user_name = os.getenv('GMAIL_USER_NAME')
 mail_app_password = os.getenv('GMAIL_APP_PASSWORD')
-mail_example_recipient = os.getenv('GMAIL_EXAMPLE_RECIPIENT')
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
