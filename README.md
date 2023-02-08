@@ -7,6 +7,18 @@ It uses Django templates.  Please see this URL to understand the syntax:  https:
 
 It is arranged in a series of branches or checkpoints with new features.  Try starting at the simplist, lowest-numbered branches. 
 
+# Prerequisites (meant to be used with IDE like VSCode)
+Instructions for running and debugging this python file in VSCode
+The program assumes that you have python3 and pip3 installed on your machine.
+In the VSCode terminal window type the following:
+    pip3 install -r requirements.txt
+In VSCode, press Cmd-Shift-P (on Mac) or Ctrl-Shift-P (on Windows).
+   In the command selection text box, type "Python Create"
+   From the options dropdown select "Python Create Environment"
+   From the next options dropdown select "venv"
+After the above and setting up the database, you should be able to run and debug this program
+
+
 ## Cloning the repo
 First clone this repo by running in a terminal or command prompt:
 ```bash

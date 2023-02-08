@@ -2,7 +2,7 @@ import os
 from intro_to_flask import app
 import sys 
 sys.dont_write_bytecode = True
-from flask import render_template, request, Flask
+from flask import render_template, request, flash
 from flask_mail import Message, Mail
 from .forms import ContactForm
 
