@@ -19,14 +19,22 @@ pipelines:
       - step:
           name: Lint code
           script:
-            # Enforce style consistency across Python projects https://flake8.pycqa.org
+            # Enforce style consistency across Python projects https://flake8.pycqa.org/en/latest/
             - pip install flake8
-            - flake8 . --extend-exclude=dist,build --show-source --statistics
+            - flake8 . --config .flake8 --show-source --statistics
       - step:
-          name: Deploy to Firebase
-          deployment: production
+          name: Deploy to test
+          deployment: test
+          # trigger: manual  # Uncomment to make this a manual deployment.
           script:
-            - pipe: atlassian/firebase-deploy:0.2.4
+            - echo "Deploying to test environment"
+            - pipe: atlassian/firebase-deploy:3.1.1
               variables:
-                FIREBASE_TOKEN: $FIREBASE_TOKEN
-                PROJECT_ID: $FIREBASE_PROJECT
+                KEY_FILE: '<string>'
+                FIREBASE_TOKEN: '<string>'
+                # PROJECT_ID: '<string>' # Optional.
+                # NODE_JS_VERSION: '<string>' # Optional.
+                # MESSAGE: '<string>' # Optional.
+                # EXTRA_ARGS: '<string>' # Optional.
+                # MULTI_SITES_CONFIG: '<json>' # Optional
+                # DEBUG: '<boolean>' # Optional.
