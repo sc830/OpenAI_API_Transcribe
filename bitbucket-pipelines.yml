@@ -23,15 +23,20 @@ pipelines:
             - pip install flake8
             - flake8 . --config .flake8 --show-source --statistics
       - step:
-          name: Deploy to test
-          deployment: test
+          name: Deploy to Firebase
+          deployment: production
           # trigger: manual  # Uncomment to make this a manual deployment.
           script:
-            - echo "Deploying to test environment"
-            - pipe: atlassian/firebase-deploy:3.1.1
-              variables:
-                KEY_FILE: '<string>'
-                FIREBASE_TOKEN: '<string>'
+            - echo "Deploying to production environment"
+            pipe: atlassian/firebase-deploy:0.2.4
+            variables:
+              FIREBASE_TOKEN: $FIREBASE_TOKEN
+              PROJECT_ID: $FIREBASE_PROJECT
+            #- pipe: atlassian/firebase-deploy:3.1.1
+              #variables:
+                #KEY_FILE: '<string>'
+                #FIREBASE_TOKEN: '<string>'
+
                 # PROJECT_ID: '<string>' # Optional.
                 # NODE_JS_VERSION: '<string>' # Optional.
                 # MESSAGE: '<string>' # Optional.
