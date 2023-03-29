@@ -28,10 +28,10 @@ pipelines:
           # trigger: manual  # Uncomment to make this a manual deployment.
           script:
             - echo "Deploying to production environment"
-            pipe: atlassian/firebase-deploy:0.2.4
-            variables:
-              FIREBASE_TOKEN: $FIREBASE_TOKEN
-              PROJECT_ID: $FIREBASE_PROJECT
+            - pipe: atlassian/firebase-deploy:0.2.4
+              variables:
+                FIREBASE_TOKEN: $FIREBASE_TOKEN
+                PROJECT_ID: $FIREBASE_PROJECT
             #- pipe: atlassian/firebase-deploy:3.1.1
               #variables:
                 #KEY_FILE: '<string>'
