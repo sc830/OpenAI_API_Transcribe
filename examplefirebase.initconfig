@@ -1,0 +1,19 @@
+
+// https://console.firebase.google.com/project/cs3398bitbucket-flask-email/settings/general/web:YmRjZTIzOTUtMjVhMy00NWNiLWFmMDAtMmEwZTU5MzEyNjM2
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBK4Br9YXzN7jY50N0cbe7fy2dfFMFoYu0",
+  authDomain: "cs3398bitbucket-flask-email.firebaseapp.com",
+  projectId: "cs3398bitbucket-flask-email",
+  storageBucket: "cs3398bitbucket-flask-email.appspot.com",
+  messagingSenderId: "528809462878",
+  appId: "1:528809462878:web:95444624e2a8d6ce7df8cf"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
