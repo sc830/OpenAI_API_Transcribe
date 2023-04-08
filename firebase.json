@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "intro_to_flask/templates",
     "ignore": [
       "firebase.json",
       "**/.*",
