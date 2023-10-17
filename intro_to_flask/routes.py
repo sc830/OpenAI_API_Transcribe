@@ -1,4 +1,5 @@
 import os
+import openai
 import re #regular expressions module
 from markupsafe import escape #protects projects against injection attacks
 from intro_to_flask import app
@@ -7,6 +8,8 @@ sys.dont_write_bytecode = True
 from flask import render_template, request, Flask
 from flask_mail import Message, Mail
 from .forms import ContactForm
+from .askmeform import AskmeForm
+
 
 #The mail_user_name and mail_app_password values are in the .env file
 #Google requires an App Password as of May, 2022: 
@@ -14,6 +17,7 @@ from .forms import ContactForm
 
 mail_user_name = os.getenv('GMAIL_USER_NAME')
 mail_app_password = os.getenv('GMAIL_APP_PASSWORD')
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -77,3 +81,26 @@ def contact():
 
   elif request.method == 'GET':
       return render_template('contact.html', form=form)
+    
+@app.route('/askme',methods=['GET', 'POST'])
+def askme():
+  form = AskmeForm(request.form)
+  
+  if request.method == 'POST':
+      if form.validate() == False:
+        return render_template('askme.html', form=form)
+      else:
+        response = openai.Completion.create(
+          engine="gpt-3.5-turbo-instruct",  # or another engine ID
+          prompt=form.prompt.data,
+          max_tokens=150
+        )
+        display_text = response.choices[0].text.strip()
+        return render_template('askme.html', ask_me_prompt=form.prompt.data,ask_me_response=display_text,success=True)
+      
+  elif request.method == 'GET':
+      return render_template('askme.html', form=form)
+    
+
+  
+  
