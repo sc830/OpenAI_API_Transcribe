@@ -1,4 +1,5 @@
 import os
+import openai
 import re #regular expressions module
 from markupsafe import escape #protects projects against injection attacks
 from intro_to_flask import app
@@ -14,6 +15,7 @@ from .forms import ContactForm
 
 mail_user_name = os.getenv('GMAIL_USER_NAME')
 mail_app_password = os.getenv('GMAIL_APP_PASSWORD')
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -77,3 +79,14 @@ def contact():
 
   elif request.method == 'GET':
       return render_template('contact.html', form=form)
+    
+@app.route('/askme')
+def askme():
+  my_prompt="What is a good Polish recipe for kielbasa"
+  response = openai.Completion.create(
+    engine="gpt-3.5-turbo-instruct",  # or another engine ID
+    prompt=my_prompt,
+    max_tokens=150
+  )
+  display_text = response.choices[0].text.strip()
+  return render_template('askme.html', ask_me_prompt=my_prompt,ask_me_response=display_text)
