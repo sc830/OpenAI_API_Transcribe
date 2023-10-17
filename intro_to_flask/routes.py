@@ -8,6 +8,8 @@ sys.dont_write_bytecode = True
 from flask import render_template, request, Flask
 from flask_mail import Message, Mail
 from .forms import ContactForm
+from .askmeform import AskmeForm
+
 
 #The mail_user_name and mail_app_password values are in the .env file
 #Google requires an App Password as of May, 2022: 
@@ -80,8 +82,9 @@ def contact():
   elif request.method == 'GET':
       return render_template('contact.html', form=form)
     
-@app.route('/askme')
+@app.route('/askme',methods=['GET', 'POST'])
 def askme():
+  form = AskmeForm(request.form)
   my_prompt="What is a good Polish recipe for kielbasa"
   response = openai.Completion.create(
     engine="gpt-3.5-turbo-instruct",  # or another engine ID
