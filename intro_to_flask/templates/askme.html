@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Ask me</h2>
+{% if ask_me_prompt == " " %}
+<p>Ask me anything! </p>
+{% else %}
+<p> You asked me:  "{{ask_me_prompt}}"".  </p>
+<p> Here's your answer:  {{ask_me_response}}  </p>
+{% endif %}
+
+{% endblock %}
