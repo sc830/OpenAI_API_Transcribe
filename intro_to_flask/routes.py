@@ -85,11 +85,22 @@ def contact():
 @app.route('/askme',methods=['GET', 'POST'])
 def askme():
   form = AskmeForm(request.form)
-  my_prompt="What is a good Polish recipe for kielbasa"
-  response = openai.Completion.create(
-    engine="gpt-3.5-turbo-instruct",  # or another engine ID
-    prompt=my_prompt,
-    max_tokens=150
-  )
-  display_text = response.choices[0].text.strip()
-  return render_template('askme.html', ask_me_prompt=my_prompt,ask_me_response=display_text)
+  
+  if request.method == 'POST':
+      if form.validate() == False:
+        return render_template('askme.html', form=form)
+      else:
+        response = openai.Completion.create(
+          engine="gpt-3.5-turbo-instruct",  # or another engine ID
+          prompt=form.prompt.data,
+          max_tokens=150
+        )
+        display_text = response.choices[0].text.strip()
+        return render_template('askme.html', ask_me_prompt=form.prompt.data,ask_me_response=display_text,success=True)
+      
+  elif request.method == 'GET':
+      return render_template('askme.html', form=form)
+    
+
+  
+  

@@ -88,6 +88,7 @@ form label {
   padding: 10px 0;
 }
 
+
 form input#name,
 form input#email,
 form input#subject {
@@ -101,7 +102,8 @@ form input#subject {
   font-size: 1.1em;
 }
 
-form textarea#message {
+form textarea#message,
+form textarea#prompt {
   width: 500px;
   height: 100px;
   background-color: #fafafa;
