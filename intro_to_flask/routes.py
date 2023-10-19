@@ -9,6 +9,7 @@ from flask import render_template, request, Flask
 from flask_mail import Message, Mail
 from .forms import ContactForm
 from .askmeform import AskmeForm
+from .drawmeform import DrawmeForm
 
 
 #The mail_user_name and mail_app_password values are in the .env file
@@ -90,6 +91,8 @@ def askme():
       if form.validate() == False:
         return render_template('askme.html', form=form)
       else:
+        # The following response code adapted from example on: 
+        # https://platform.openai.com/docs/quickstart?context=python
         response = openai.Completion.create(
           engine="gpt-3.5-turbo-instruct",  # or another engine ID
           prompt=form.prompt.data,
@@ -100,6 +103,27 @@ def askme():
       
   elif request.method == 'GET':
       return render_template('askme.html', form=form)
+    
+@app.route('/drawme',methods=['GET', 'POST'])
+def drawme():
+  form = DrawmeForm(request.form)
+  
+  if request.method == 'POST':
+      if form.validate() == False:
+        return render_template('drawme.html', form=form)
+      else:
+        # The following response code adapted from example on: 
+        # https://platform.openai.com/docs/guides/images/usage?context=node 
+        response = openai.Image.create(
+          prompt=form.prompt.data,
+          n=1,
+          size="1024x1024"
+        )
+        display_image_url = response['data'][0]['url']
+        return render_template('drawme.html', draw_me_prompt=form.prompt.data,draw_me_response=display_image_url,success=True)
+      
+  elif request.method == 'GET':
+      return render_template('drawme.html', form=form)
     
 
   
