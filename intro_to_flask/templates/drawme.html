@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Ask me</h2>
+
+{% if success %}
+<p> You asked me:  "{{draw_me_prompt}}"".  </p>
+<p> Here's your answer:  {{draw_me_response}}  </p>
+{% else %}  
+{% for prompt in form.prompt.errors %}
+<div class="flash">{{ prompt }}</div>
+{% endfor %}
+
+<form action="{{ url_for('drawme') }}" method=post>
+<!-- 
+This form has no CSRF protection.  To add, see:
+https://flask-wtf.readthedocs.io/en/0.15.x/csrf/
+--> 
+
+{{ form.prompt.label }}
+{{ form.prompt }}
+
+{{ form.submit }}
+</form>
+{% endif %}
+
+{% endblock %}
