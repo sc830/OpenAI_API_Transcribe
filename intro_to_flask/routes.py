@@ -9,6 +9,7 @@ from flask import render_template, request, Flask
 from flask_mail import Message, Mail
 from .forms import ContactForm
 from .askmeform import AskmeForm
+from .drawmeform import DrawmeForm
 
 
 #The mail_user_name and mail_app_password values are in the .env file
@@ -100,6 +101,26 @@ def askme():
       
   elif request.method == 'GET':
       return render_template('askme.html', form=form)
+    
+@app.route('/drawme',methods=['GET', 'POST'])
+def drawme():
+  form = DrawmeForm(request.form)
+  
+  if request.method == 'POST':
+      if form.validate() == False:
+        return render_template('drawme.html', form=form)
+      else:
+        # prompt=form.prompt.data,
+        response = openai.Image.create(
+          prompt="a white siamese cat",
+          n=1,
+          size="1024x1024"
+        )
+        display_image_url = response['data'][0]['url']
+        return render_template('drawme.html', draw_me_prompt=form.prompt.data,draw_me_response=display_image_url,success=True)
+      
+  elif request.method == 'GET':
+      return render_template('drawme.html', form=form)
     
 
   
