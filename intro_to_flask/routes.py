@@ -91,6 +91,8 @@ def askme():
       if form.validate() == False:
         return render_template('askme.html', form=form)
       else:
+        # The following response code adapted from example on: 
+        # https://platform.openai.com/docs/quickstart?context=python
         response = openai.Completion.create(
           engine="gpt-3.5-turbo-instruct",  # or another engine ID
           prompt=form.prompt.data,
@@ -110,9 +112,10 @@ def drawme():
       if form.validate() == False:
         return render_template('drawme.html', form=form)
       else:
-        # prompt=form.prompt.data,
+        # The following response code adapted from example on: 
+        # https://platform.openai.com/docs/guides/images/usage?context=node 
         response = openai.Image.create(
-          prompt="a white siamese cat",
+          prompt=form.prompt.data,
           n=1,
           size="1024x1024"
         )

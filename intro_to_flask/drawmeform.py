@@ -7,5 +7,5 @@ from flask_wtf import Form
 from wtforms import TextAreaField, SubmitField, validators, ValidationError
 
 class DrawmeForm(Form):
-    prompt = TextAreaField("Your Question",  [validators.InputRequired("Please enter a question.")])
+    prompt = TextAreaField("What would you like to draw?",  [validators.InputRequired("Please enter a prompt.")])
     submit = SubmitField("Send") 
