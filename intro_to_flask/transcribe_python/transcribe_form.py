@@ -4,9 +4,9 @@ sys.dont_write_bytecode = True
 # pip install flask-wtf
 # pip install email_validator
 from flask_wtf import Form
-from wtforms import TextAreaField, SubmitField, validators, ValidationError
+from wtforms import FileField, SubmitField, validators, ValidationError
+from wtforms.validators import InputRequired
 
 class TranscribemeForm(Form):
-    #You create the form
-    prompt = "you change this"
-    submit = "you change this"
+    audio_file = FileField("Your Audio File", validators=[InputRequired("Please upload an audio file.")])
+    submit = SubmitField("Send")
