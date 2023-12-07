@@ -7,9 +7,11 @@ import sys
 sys.dont_write_bytecode = True
 from flask import render_template, request, Flask
 from flask_mail import Message, Mail
-from .forms import ContactForm
-from .askmeform import AskmeForm
-from .drawmeform import DrawmeForm
+from .contact_form import ContactForm
+from .ask_route import ask_blueprint
+from .draw_route import draw_blueprint
+from .about_route import about_blueprint
+from .transcribe_route import transcribe_blueprint
 
 
 #The mail_user_name and mail_app_password values are in the .env file
@@ -33,36 +35,6 @@ mail = Mail(app)
 def home():
   return render_template('home.html')
 
-@app.route('/about',defaults={'route_with_name': None})
-@app.route('/about/<route_with_name>')
-def about(route_with_name):
-  # Set default about me message and team member names.
-  about_me = 'I like CS3398 allot!!!!!!!'
-  team_names = ["Mike", "Sally", "Tom"]
-  cleaned_name = ''
-
-  # if a name was included in route, check to see if it uses (only) English alphabet characters.
-  # This uses escape to 'sanitize' the route_with_name to remove characters that might cause a 
-  # 'script injection attack':
-  # https://www.stackhawk.com/blog/command-injection-python/
-  # https://security.openstack.org/guidelines/dg_cross-site-scripting-xss.html
-  # https://cwe.mitre.org/data/definitions/95.html
-  if route_with_name:
-    is_english_aphabetic = re.match("[a-zA-Z]+", escape(route_with_name))
-     # If an English alpabet name, get it.
-     # We are not reporting an error if the route_with_name is not English alphabetic 
-    if is_english_aphabetic:                       
-      cleaned_name = is_english_aphabetic.group(0)
-    
-    if cleaned_name in team_names:                  
-      return render_template('about.html', about_name=cleaned_name, about_aboutMe=about_me, team_names=team_names)
-    else:
-      cleaned_name = "Us"
-  else:
-    cleaned_name = "Us"
-  return render_template('about.html', about_name=cleaned_name, about_aboutMe="We like CS3398 allot!!!!", team_names=team_names)
-
-
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
   # Flask 2.2.2 requires a parameter to a form object: request.form or other
@@ -82,49 +54,9 @@ def contact():
 
   elif request.method == 'GET':
       return render_template('contact.html', form=form)
-    
-@app.route('/askme',methods=['GET', 'POST'])
-def askme():
-  form = AskmeForm(request.form)
-  
-  if request.method == 'POST':
-      if form.validate() == False:
-        return render_template('askme.html', form=form)
-      else:
-        # The following response code adapted from example on: 
-        # https://platform.openai.com/docs/quickstart?context=python
-        response = openai.Completion.create(
-          engine="gpt-3.5-turbo-instruct",  # or another engine ID
-          prompt=form.prompt.data,
-          max_tokens=150
-        )
-        display_text = response.choices[0].text.strip()
-        return render_template('askme.html', ask_me_prompt=form.prompt.data,ask_me_response=display_text,success=True)
-      
-  elif request.method == 'GET':
-      return render_template('askme.html', form=form)
-    
-@app.route('/drawme',methods=['GET', 'POST'])
-def drawme():
-  form = DrawmeForm(request.form)
-  
-  if request.method == 'POST':
-      if form.validate() == False:
-        return render_template('drawme.html', form=form)
-      else:
-        # The following response code adapted from example on: 
-        # https://platform.openai.com/docs/guides/images/usage?context=node 
-        response = openai.Image.create(
-          prompt=form.prompt.data,
-          n=1,
-          size="1024x1024"
-        )
-        display_image_url = response['data'][0]['url']
-        return render_template('drawme.html', draw_me_prompt=form.prompt.data,draw_me_response=display_image_url,success=True)
-      
-  elif request.method == 'GET':
-      return render_template('drawme.html', form=form)
-    
-
-  
+       
+app.register_blueprint(about_blueprint) 
+app.register_blueprint(ask_blueprint) 
+app.register_blueprint(draw_blueprint) 
+app.register_blueprint(transcribe_blueprint)
   
