@@ -23,7 +23,7 @@ def transcribeme():
         # https://platform.openai.com/docs/guides/speech-to-text
         audio_file= open(form.prompt.data, "rb")
         transcript = openai.Audio.transcribe("whisper-1", audio_file)
-        return render_template('transcribeme.html', audio_file=form.prompt.data, transcription=transcription['text'], success=True)
+        return render_template('transcribeme.html', audio_file=form.prompt.data, transcription=transcript['text'], success=True)
       
   elif request.method == 'GET':
       return render_template('transcribeme.html', form=form)
