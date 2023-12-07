@@ -10,6 +10,7 @@ from flask_mail import Message, Mail
 from .contact_form import ContactForm
 from .ask_python.ask_route import ask_blueprint
 from .draw_python.draw_route import draw_blueprint
+#from .transcribe_python.transcribe_route import transcribe_blueprint
 from .about_python.about_route import about_blueprint
 from .transcribe_python.transcribe_route import transcribe_blueprint
 

@@ -10,9 +10,10 @@ from .transcribe_form import TranscribemeForm
 
 transcribe_blueprint = Blueprint('transcribeme', __name__)
 
-# You add the right decorators and routes here
+@transcribe_blueprint.route('/transcribeme',methods=['GET', 'POST'])
+@app.route('/transcribeme',methods=['GET', 'POST'])
 def transcribeme():
-  # You add the call to the form
+  form = TranscribemeForm(request.form)
   
   if request.method == 'POST':
       if form.validate() == False:
@@ -22,8 +23,7 @@ def transcribeme():
         # https://platform.openai.com/docs/guides/speech-to-text
         audio_file= open(form.prompt.data, "rb")
         transcript = openai.Audio.transcribe("whisper-1", audio_file)
-        #You add the parameters to render_template
-        return render_template()
+        return render_template('transcribeme.html', transcription=transcript['text'], success=True)
       
   elif request.method == 'GET':
       return render_template('transcribeme.html', form=form)
