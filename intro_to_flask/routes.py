@@ -5,14 +5,13 @@ from markupsafe import escape #protects projects against injection attacks
 from intro_to_flask import app
 import sys 
 sys.dont_write_bytecode = True
-from flask import render_template, request, Flask
+from flask import render_template, request, Flask,Blueprint
 from flask_mail import Message, Mail
 from .contact_form import ContactForm
 from .ask_python.ask_route import ask_blueprint
 from .draw_python.draw_route import draw_blueprint
 from .about_python.about_route import about_blueprint
 #from transcribe_python.transcribe_route import transcribe_blueprint
-
 
 #The mail_user_name and mail_app_password values are in the .env file
 #Google requires an App Password as of May, 2022: 
