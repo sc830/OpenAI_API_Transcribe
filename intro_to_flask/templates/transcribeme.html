@@ -5,8 +5,8 @@
 
 {% if success %}
 <!-- You fill in the variables in the two statements below-->
-<p> <b> You gave me: </b> "".  </p>
-<p> <b>Here's your transcription: </b>     </p>
+<p> <b> You gave me: </b> "{{ audio_file }}".  </p>
+<p> <b>Here's your transcription: </b>  {{ transcription }}   </p>
 {% else %}  
 {% for prompt in form.prompt.errors %}
 <div class="flash">{{ prompt }}</div>
