@@ -68,11 +68,11 @@ h3 {
 }
 
 .menu li {
-  display: inline;
+  display: inline-block;
 }
 
 .menu li + li {
-  margin-left: 35px;
+  margin-left: 15px;
 }
 
 .menu li a {
